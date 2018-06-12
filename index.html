@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<title>JavaScript Game</title>
+
+	<!-- jquery -->
+	<script src="assets/js/jquery-3.3.1.min.js"></script>
+	<script src="assets/js/animate.js"></script>
+
+	<!-- bootstrap css -->
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+
+	<!-- external css -->
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+<body>
+
+	<h1 class="text-center p-2">Mood Slot Machine</h1>
+
+	<div class="container-fluid">
+		
+		<div class="row text-center p-2">
+			<div class="col-sm-4 col-md-4 col-lg-4">
+				<div class="slot">
+					<div id="slot1" class="slotContainer">
+						<img class="img-fluid img-responsive mb-2" src="assets/images/happy.png">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-md-4 col-lg-4">
+				<div class="slot">
+					<div id="slot2" class="slotContainer">
+						<img class="img-fluid img-responsive mb-2" src="assets/images/happy.png">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4 col-md-4 col-lg-4">
+				<div class="slot">
+					<div id="slot3" class="slotContainer">
+						<img class="img-fluid img-responsive mb-2" src="assets/images/happy.png">
+					</div>
+				</div>
+			</div>
+		</div> <!-- end row -->
+
+	</div> <!-- end container -->
+
+	<div class="btn">
+		<button id="randomizeButton" class="btn btn-danger" role="button">Shuffle</button>
+	</div>
+
+	<script type="text/javascript">
+
+		var imageSlot1 = $('#slot1 img');
+		var imageSlot2 = $('#slot2 img');
+		var imageSlot3 = $('#slot3 img');
+
+		var imageLinks = [
+			'assets/images/happy.png',
+			'assets/images/in-love.png',
+			'assets/images/mad.png',
+			'assets/images/confused.png',
+			'assets/images/kissing.png',
+			'assets/images/crying.png',
+			'assets/images/bored.png'
+		];
+
+		$("document").ready(function() {
+			$('#randomizeButton').click(function(){
+
+				var timerSlot1 = randomizeSeconds(3, 6);
+				var timerSlot2 = randomizeSeconds(3, 6);
+				var timerSlot3 = randomizeSeconds(3, 6);
+
+				createTimeOutsPerSecond(function(){
+					randomizeSlotImage(imageSlot1)
+				}, timerSlot1);
+				createTimeOutsPerSecond(function(){
+					randomizeSlotImage(imageSlot2)
+				}, timerSlot2);
+				createTimeOutsPerSecond(function() {
+					randomizeSlotImage(imageSlot3) 
+				}, timerSlot3);
+			});
+		});
+
+		function createTimeOutsPerSecond(callback, duration)
+		{
+			while (duration >= 0) {
+				setTimeout(callback, duration);
+				duration -= 500;
+			}
+		}
+
+		function randomizeSlotImage(slotImage)
+		{
+			slotImage.removeClass('slideInUp animated');
+			slotImage.animateCss('slideOutUp', function() {
+				slotImage.attr('src', imageLinks[randomize(0, 6)]);
+				slotImage.removeClass('slideOutUp animated');
+				slotImage.animateCss('slideInUp');
+			});
+
+		}
+
+		function randomizeSeconds(lower, upper)
+		{
+			return randomize(lower, upper) * 1000;
+		}
+
+		function randomize(lower, upper)
+		{
+			return Math.floor((Math.random() * upper) + lower);
+		}
+
+		
+	</script>
+
+</body>
+</html>
