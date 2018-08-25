@@ -4,6 +4,17 @@
 	box-sizing: border-box;
 }
 
+body {
+	background-color: #000;
+}
+
+h1 {
+	color: red;
+}
+
+#container {
+	margin-top: 10%;
+}
 
 .row {
 	display: flex;
